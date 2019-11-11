@@ -4,11 +4,11 @@ import pandas as pd
 
 def color_change(turnout):
         if(turnout < 30):
-            return('green')
-        elif(30 <= turnout < 60):
-            return('orange')
-        else:
             return('red')
+        elif(30 <= turnout < 60):
+            return('green')
+        else:
+            return('blue')
 
 def popup_html(i, df, data):
         html = '<h5> УИК № {}</h5>'.format(df.iloc[i,0])
@@ -23,13 +23,13 @@ def showMaps(data):
     df = pd.read_sql("SELECT * FROM coordinates", conn) 
        
     map = fol.Map(location=[59.976040,30.45], 
-                 tiles= 'cartodbpositron',
+                 tiles= 'Stamen Toner',
                  zoom_start = 11.5)
 
     tooltip = 'Click me!'
 
     for i in range(data.shape[0]):
-        fol.Marker(location=[df.iloc[i+65,1],df.iloc[i+65,2]],
+        fol.Marker(location=[df.iloc[i+65,1],df.iloc[i+65,2]], 
                   popup = fol.Popup(popup_html(i, df, data), max_width=700, height=250),
                   icon=fol.Icon(color = color_change(data.iloc[i,19]), icon='cloud')).add_to(map)
     
